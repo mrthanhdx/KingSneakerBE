@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 @RestController
-@RequestMapping("/api/v1/kieu-dang")
+@RequestMapping("/api/v1/NSX")
 public class NsxController {
 
     @Autowired
