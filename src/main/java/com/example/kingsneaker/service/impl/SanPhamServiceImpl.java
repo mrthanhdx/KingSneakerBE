@@ -31,4 +31,9 @@ public class SanPhamServiceImpl implements SanPhamService {
     public List<SanPham> findAll() {
         return sanPhamRepository.findAll();
     }
+
+    @Override
+    public void updateStatusProduct(Long idSp, int status) {
+        sanPhamRepository.updateStatusProduct(idSp,status);
+    }
 }
