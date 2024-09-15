@@ -1,6 +1,7 @@
 package com.example.kingsneaker.mapper;
 
-import com.example.kingsneaker.dto.ChiTietSanPhamDto;
+import com.example.kingsneaker.request.ChiTietSanPhamRequest;
+import com.example.kingsneaker.response.ChiTietSanPhamResponse;
 import com.example.kingsneaker.entity.ChatLieu;
 import com.example.kingsneaker.entity.ChiTietSanPham;
 import com.example.kingsneaker.entity.KhuyenMai;
@@ -19,7 +20,6 @@ import com.example.kingsneaker.service.NsxService;
 import com.example.kingsneaker.service.SanPhamService;
 import com.example.kingsneaker.service.ThuongHieuService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -45,31 +45,40 @@ public class ChiTietSanPhamMapper {
 
 
 
-    public ChiTietSanPhamDto mapToDto(ChiTietSanPham chiTietSanPham) {
-        ChiTietSanPhamDto chiTietSanPhamDto = new ChiTietSanPhamDto();
+    public ChiTietSanPhamResponse mapToResponse(ChiTietSanPham chiTietSanPham) {
+        ChiTietSanPhamResponse chiTietSanPhamDto = new ChiTietSanPhamResponse();
         chiTietSanPhamDto.setId(chiTietSanPham.getId());
         chiTietSanPhamDto.setGiaBan(chiTietSanPham.getGiaBan());
         chiTietSanPhamDto.setSoLuong(chiTietSanPham.getSoLuong());
         chiTietSanPhamDto.setTrangThai(chiTietSanPham.getTrangThai());
-        chiTietSanPhamDto.setIdSanPham(chiTietSanPham.getSanPham().getId());
-        chiTietSanPhamDto.setIdChatLieu(chiTietSanPham.getChatLieu().getId());
-        chiTietSanPhamDto.setIdNsx(chiTietSanPham.getNsx().getId());
-        chiTietSanPhamDto.setIdKichCo(chiTietSanPham.getKichCo().getId());
-        chiTietSanPhamDto.setIdKieuDang(chiTietSanPham.getKieuDang().getId());
-        chiTietSanPhamDto.setIdMauSac(chiTietSanPham.getMauSac().getId());
-        chiTietSanPhamDto.setIdKhuyenMai(chiTietSanPham.getKhuyenMai().getId());
-        chiTietSanPhamDto.setIdThuongHieu(chiTietSanPham.getThuongHieu().getId());
+        chiTietSanPhamDto.setPathHinhAnh(chiTietSanPham.getHinhAnh()!=null?chiTietSanPham.getHinhAnh().getphotoPath():null);
+        chiTietSanPhamDto.setTenSanPham(chiTietSanPham.getSanPham()!=null?chiTietSanPham.getSanPham().getTen():null);
+        chiTietSanPhamDto.setIdSanPham(chiTietSanPham.getSanPham()!=null?chiTietSanPham.getSanPham().getId():null);
+        chiTietSanPhamDto.setChatLieu(chiTietSanPham.getChatLieu()!=null?chiTietSanPham.getChatLieu().getTen():null);
+        chiTietSanPhamDto.setIdChatLieu(chiTietSanPham.getChatLieu()!=null?chiTietSanPham.getChatLieu().getId():null);
+        chiTietSanPhamDto.setNsx(chiTietSanPham.getNsx()!=null?chiTietSanPham.getNsx().getTen():null);
+        chiTietSanPhamDto.setIdNsx(chiTietSanPham.getNsx()!=null?chiTietSanPham.getNsx().getId():null);
+
+        chiTietSanPhamDto.setKichCo(chiTietSanPham.getKichCo()!=null?chiTietSanPham.getKichCo().getTen():null);
+        chiTietSanPhamDto.setIdKichCo(chiTietSanPham.getKichCo()!=null?chiTietSanPham.getKichCo().getId():null);
+
+        chiTietSanPhamDto.setKieuDang(chiTietSanPham.getKieuDang()!=null?chiTietSanPham.getKieuDang().getTen():null);
+        chiTietSanPhamDto.setIdKieuDang(chiTietSanPham.getKieuDang()!=null?chiTietSanPham.getKieuDang().getId():null);
+
+        chiTietSanPhamDto.setMauSac(chiTietSanPham.getMauSac()!=null?chiTietSanPham.getMauSac().getTen():null);
+        chiTietSanPhamDto.setIdMauSac(chiTietSanPham.getMauSac()!=null?chiTietSanPham.getMauSac().getId():null);
+
+        chiTietSanPhamDto.setIdKhuyenMai(chiTietSanPham.getKhuyenMai()!=null?chiTietSanPham.getKhuyenMai().getId():null);
+        chiTietSanPhamDto.setThuongHieu(chiTietSanPham.getThuongHieu()!=null?chiTietSanPham.getThuongHieu().getTen():null);
+        chiTietSanPhamDto.setIdThuongHieu(chiTietSanPham.getThuongHieu()!=null?chiTietSanPham.getThuongHieu().getId():null);
+
 
         return chiTietSanPhamDto;
     }
 
 
-    public ChiTietSanPham mapToEntity(ChiTietSanPhamDto dto) {
+    public ChiTietSanPham mapToEntity(ChiTietSanPhamRequest dto) {
         ChiTietSanPham ctsp = new ChiTietSanPham();
-        System.out.println(sanPhamService);
-        System.out.println(mauSacService);
-        System.out.println(thuongHieuService);
-        System.out.println(nsxService);
 
 
         ctsp.setId(dto.getId());
