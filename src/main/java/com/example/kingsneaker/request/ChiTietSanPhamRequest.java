@@ -1,28 +1,19 @@
-package com.example.kingsneaker.dto;
+package com.example.kingsneaker.request;
 
-import com.example.kingsneaker.entity.ChatLieu;
-import com.example.kingsneaker.entity.HinhAnh;
-import com.example.kingsneaker.entity.KhuyenMai;
-import com.example.kingsneaker.entity.KichCo;
-import com.example.kingsneaker.entity.KieuDang;
-import com.example.kingsneaker.entity.MauSac;
-import com.example.kingsneaker.entity.NSX;
-import com.example.kingsneaker.entity.SanPham;
-import com.example.kingsneaker.entity.ThuongHieu;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import org.springframework.web.multipart.MultipartFile;
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 
+public class ChiTietSanPhamRequest {
 
-public class ChiTietSanPhamDto {
     private Long id;
     @NotNull
     private Double giaBan;
@@ -33,7 +24,10 @@ public class ChiTietSanPhamDto {
     private String trangThai;
 
     @NotNull
+    private MultipartFile image;
+    @NotNull
     private Long idSanPham;
+
 
     @NotNull
     private Long idMauSac;
@@ -47,7 +41,6 @@ public class ChiTietSanPhamDto {
     @NotNull
     private Long idKieuDang;
 
-    @NotNull
     private Long idKhuyenMai;
 
     @NotNull
@@ -56,5 +49,6 @@ public class ChiTietSanPhamDto {
     @NotNull
     private Long idThuongHieu;
 
-//    private Long idHinhAnh;
+
+
 }
