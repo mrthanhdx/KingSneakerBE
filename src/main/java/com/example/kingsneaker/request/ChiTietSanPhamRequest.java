@@ -15,38 +15,40 @@ import org.springframework.web.multipart.MultipartFile;
 public class ChiTietSanPhamRequest {
 
     private Long id;
-    @NotNull
+    @NotNull(message = "giaBan must not be null")
     private Double giaBan;
-    @NotNull
+
+    @NotNull(message = "soLuong must not be null")
     private Integer soLuong;
-    @NotNull
+
+    @NotNull(message = "trangThai must not be null")
     @NotBlank
     private String trangThai;
 
-    @NotNull
+//    @NotNull
     private MultipartFile image;
-    @NotNull
+
+    @NotNull(message = "sanPham must not be null")
     private Long idSanPham;
 
 
-    @NotNull
+    @NotNull(message = "mau sac must not be null")
     private Long idMauSac;
 
-    @NotNull
+    @NotNull(message = "kich co must not be null")
     private Long idKichCo;
 
-    @NotNull
+    @NotNull(message = "chatLieu must not be null")
     private Long idChatLieu;
 
-    @NotNull
+    @NotNull(message = "Kieu Dang must not be null")
     private Long idKieuDang;
 
     private Long idKhuyenMai;
-
-    @NotNull
+    @NotNull(message = "NSX must not be null")
     private Long idNsx;
 
-    @NotNull
+    @NotNull(message = "ThuongHieu must not be null")
     private Long idThuongHieu;
 
 

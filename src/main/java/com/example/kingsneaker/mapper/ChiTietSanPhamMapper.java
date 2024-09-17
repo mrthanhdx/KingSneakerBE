@@ -103,8 +103,10 @@ public class ChiTietSanPhamMapper {
         MauSac mauSac = mauSacService.findById(dto.getIdMauSac());
         ctsp.setMauSac(mauSac);
 
-        KhuyenMai khuyenMai = khuyenMaiService.findById(dto.getIdKhuyenMai());
-        ctsp.setKhuyenMai(khuyenMai);
+       if(dto.getIdKhuyenMai()!=null) {
+           KhuyenMai khuyenMai = khuyenMaiService.findById(dto.getIdKhuyenMai());
+           ctsp.setKhuyenMai(khuyenMai);
+       }
 
         ThuongHieu thuongHieu = thuongHieuService.findById(dto.getIdThuongHieu());
         ctsp.setThuongHieu(thuongHieu);
