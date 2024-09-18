@@ -29,15 +29,13 @@ public class HinhAnh {
     private Long id;
 
     @Column(name = "ma")
-    private String ma;
+    private String path;
 
-    @Column(name = "ten")
-    private String ten;
 
     @Transient
-        public String getphotoPath(){
-        if(ten == null) return null;
-        return "/images/"+ id +"/"+ten;
+    public String getphotoPath() {
+        if (path == null) return null;
+        return "/images/productImg/" + path;
     }
 
     // Getters and Setters
