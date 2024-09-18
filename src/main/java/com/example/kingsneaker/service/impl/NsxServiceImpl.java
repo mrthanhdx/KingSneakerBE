@@ -15,8 +15,6 @@ public class NsxServiceImpl implements NsxService {
     @Override
     public void save(NSX nsx) {
         nsxRepository.save(nsx);
-
-        System.out.println();
     }
 
     @Override

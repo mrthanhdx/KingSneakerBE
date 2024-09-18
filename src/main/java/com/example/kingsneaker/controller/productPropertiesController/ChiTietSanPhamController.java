@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -64,6 +65,9 @@ public class ChiTietSanPhamController {
             ObjectMapper objectMapper = new ObjectMapper();
             ChiTietSanPhamRequest ctspRequest = objectMapper.readValue(details, ChiTietSanPhamRequest.class);
 
+            System.out.println(details);
+            System.out.println(image);
+            System.out.println(ctspRequest);
             //validate
             if (ctspRequest.getGiaBan() == null || ctspRequest.getGiaBan() <= 0) {
                 return new ResponseEntity<>("GiaBan must be greater than 0",HttpStatus.NOT_FOUND);
@@ -98,13 +102,33 @@ public class ChiTietSanPhamController {
     }
 
 
-    @PutMapping("/update-chi-tiet-san-pham/{idCTSP}")
-    public ResponseEntity<ChiTietSanPhamResponse> updateCTSP(@RequestBody @Valid ChiTietSanPhamRequest ctspRequest, @PathVariable("idCTSP") Long idCTSP) {
+    @PutMapping(path = "/update-chi-tiet-san-pham/{idCTSP}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> updateCTSP(
+            @RequestPart("image") MultipartFile image,
+            @RequestPart("details") String details,
+            @PathVariable("idCTSP") Long idCTSP) {
         try {
-            ctspRequest.setId(idCTSP);
+            ObjectMapper objectMapper = new ObjectMapper();
+            ChiTietSanPhamRequest ctspRequest = objectMapper.readValue(details, ChiTietSanPhamRequest.class);
+            System.out.println(idCTSP);
+            System.out.println(details);
+            System.out.println(image);
+            System.out.println(ctspRequest);
+            //validate
+            if (ctspRequest.getGiaBan() == null || ctspRequest.getGiaBan() <= 0) {
+                return new ResponseEntity<>("GiaBan must be greater than 0",HttpStatus.NOT_FOUND);
+            }
+            if (ctspRequest.getSoLuong() == null || ctspRequest.getSoLuong() <= 0) {
+                System.out.println(ctspRequest.getSoLuong());
+                return new ResponseEntity<>("soLuong must be greater than 0",HttpStatus.NOT_FOUND);
+            }
             ChiTietSanPham ctsp = chiTietSanPhamMapper.mapToEntity(ctspRequest);
-            ChiTietSanPhamResponse response = chiTietSanPhamMapper.mapToResponse(ctsp);
+
+            ctsp.setId(idCTSP);
             service.save(ctsp);
+
+
+            ChiTietSanPhamResponse response = chiTietSanPhamMapper.mapToResponse(ctsp);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             e.printStackTrace();
