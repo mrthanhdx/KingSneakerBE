@@ -1,10 +1,14 @@
 package com.example.kingsneaker.controller.productPropertiesController;
 
+import com.example.kingsneaker.entity.HinhAnh;
 import com.example.kingsneaker.request.ChiTietSanPhamRequest;
 import com.example.kingsneaker.response.ChiTietSanPhamResponse;
 import com.example.kingsneaker.entity.ChiTietSanPham;
 import com.example.kingsneaker.mapper.ChiTietSanPhamMapper;
 import com.example.kingsneaker.service.ChiTietSanPhamService;
+import com.example.kingsneaker.service.HinhAnhService;
+import com.example.kingsneaker.service.StorageService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +22,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +39,12 @@ public class ChiTietSanPhamController {
     @Autowired
     ChiTietSanPhamMapper chiTietSanPhamMapper;
 
+    @Autowired
+    HinhAnhService hinhAnhService;
+
+    @Autowired
+    StorageService storageService;
+
     @GetMapping("/show-all")
     public ResponseEntity<List<ChiTietSanPhamResponse>> showListCTSP() {
         List<ChiTietSanPham> listCtsp = service.findAll();
@@ -44,17 +56,47 @@ public class ChiTietSanPhamController {
     }
 
     @PostMapping("/new-chi-tiet-san-pham")
-    public ResponseEntity<ChiTietSanPhamResponse> newCTSP(@RequestBody @Valid ChiTietSanPhamRequest ctspRequest) {
+    public ResponseEntity<?> newCTSP(
+            @RequestPart("image") MultipartFile image,
+            @RequestPart("details") String details) {  // Change to String to manually parse the JSON
         try {
+            // Convert JSON string (details) to the ChiTietSanPhamRequest object
+            ObjectMapper objectMapper = new ObjectMapper();
+            ChiTietSanPhamRequest ctspRequest = objectMapper.readValue(details, ChiTietSanPhamRequest.class);
+
+            //validate
+            if (ctspRequest.getGiaBan() == null || ctspRequest.getGiaBan() <= 0) {
+                return new ResponseEntity<>("GiaBan must be greater than 0",HttpStatus.NOT_FOUND);
+            }
+            if (ctspRequest.getSoLuong() == null || ctspRequest.getSoLuong() <= 0) {
+                System.out.println(ctspRequest.getSoLuong());
+                return new ResponseEntity<>("soLuong must be greater than 0",HttpStatus.NOT_FOUND);
+            }
+
+            // Map the product details to entity
             ChiTietSanPham ctsp = chiTietSanPhamMapper.mapToEntity(ctspRequest);
+
+            // Handle image upload
+            HinhAnh hinhAnh = new HinhAnh();
+            String fileName = storageService.store(image);  // Store the image
+            hinhAnh.setPath(fileName);
+            hinhAnhService.save(hinhAnh);  // Save image entity
+
+            ctsp.setHinhAnh(hinhAnh);  // Set the image entity to the product
+
+            // Save the product entity
             service.save(ctsp);
+
+            // Map to response DTO
             ChiTietSanPhamResponse response = chiTietSanPhamMapper.mapToResponse(ctsp);
+
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             throw new IllegalArgumentException("Add Product Detail failed !");
         }
     }
+
 
     @PutMapping("/update-chi-tiet-san-pham/{idCTSP}")
     public ResponseEntity<ChiTietSanPhamResponse> updateCTSP(@RequestBody @Valid ChiTietSanPhamRequest ctspRequest, @PathVariable("idCTSP") Long idCTSP) {

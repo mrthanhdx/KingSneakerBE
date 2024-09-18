@@ -25,8 +25,6 @@ public class ChiTietSanPhamRequest {
     @NotBlank
     private String trangThai;
 
-//    @NotNull
-    private MultipartFile image;
 
     @NotNull(message = "sanPham must not be null")
     private Long idSanPham;
