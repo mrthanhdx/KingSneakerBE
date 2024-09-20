@@ -32,11 +32,7 @@ public class HinhAnh {
     private String path;
 
 
-    @Transient
-    public String getphotoPath() {
-        if (path == null) return null;
-        return "/images/productImg/" + path;
-    }
+
 
     // Getters and Setters
 }

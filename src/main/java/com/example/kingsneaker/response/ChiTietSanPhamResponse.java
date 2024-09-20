@@ -49,6 +49,7 @@ public class ChiTietSanPhamResponse {
 
     private String pathHinhAnh;
 
+
     private String mauSac;
     private String nsx;
 

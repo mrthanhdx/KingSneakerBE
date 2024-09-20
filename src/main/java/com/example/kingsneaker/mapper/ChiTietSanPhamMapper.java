@@ -22,9 +22,12 @@ import com.example.kingsneaker.service.NsxService;
 import com.example.kingsneaker.service.SanPhamService;
 import com.example.kingsneaker.service.StorageService;
 import com.example.kingsneaker.service.ThuongHieuService;
+import com.example.kingsneaker.service.UploadToCloudinary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Service
 public class ChiTietSanPhamMapper {
@@ -52,6 +55,9 @@ public class ChiTietSanPhamMapper {
     @Autowired
     StorageService storageService;
 
+    @Autowired
+    UploadToCloudinary uploadToCloudinary;
+
 
     public ChiTietSanPhamResponse mapToResponse(ChiTietSanPham chiTietSanPham) {
         ChiTietSanPhamResponse chiTietSanPhamDto = new ChiTietSanPhamResponse();
@@ -59,7 +65,7 @@ public class ChiTietSanPhamMapper {
         chiTietSanPhamDto.setGiaBan(chiTietSanPham.getGiaBan());
         chiTietSanPhamDto.setSoLuong(chiTietSanPham.getSoLuong());
         chiTietSanPhamDto.setTrangThai(chiTietSanPham.getTrangThai());
-        chiTietSanPhamDto.setPathHinhAnh(chiTietSanPham.getHinhAnh() != null ? chiTietSanPham.getHinhAnh().getphotoPath() : null);
+        chiTietSanPhamDto.setPathHinhAnh(chiTietSanPham.getHinhAnh() != null ? chiTietSanPham.getHinhAnh().getPath() : null);
         chiTietSanPhamDto.setTenSanPham(chiTietSanPham.getSanPham() != null ? chiTietSanPham.getSanPham().getTen() : null);
         chiTietSanPhamDto.setIdSanPham(chiTietSanPham.getSanPham() != null ? chiTietSanPham.getSanPham().getId() : null);
         chiTietSanPhamDto.setChatLieu(chiTietSanPham.getChatLieu() != null ? chiTietSanPham.getChatLieu().getTen() : null);
@@ -85,7 +91,7 @@ public class ChiTietSanPhamMapper {
     }
 
 
-    public ChiTietSanPham mapToEntity(ChiTietSanPhamRequest dto) {
+    public ChiTietSanPham mapToEntity(ChiTietSanPhamRequest dto) throws IOException {
         ChiTietSanPham ctsp = new ChiTietSanPham();
 
 
@@ -97,7 +103,6 @@ public class ChiTietSanPhamMapper {
 
         SanPham sanPham = sanPhamService.findById(dto.getIdSanPham());
         ctsp.setSanPham(sanPham);
-
 
 
         ChatLieu chatLieu = chatLieuService.findById(dto.getIdChatLieu());
@@ -114,6 +119,12 @@ public class ChiTietSanPhamMapper {
 
         MauSac mauSac = mauSacService.findById(dto.getIdMauSac());
         ctsp.setMauSac(mauSac);
+
+        HinhAnh hinhAnh = new HinhAnh();
+        String imgUrl = uploadToCloudinary.uploadImage(dto.getHinhAnh());
+        hinhAnh.setPath(imgUrl);
+        hinhAnhService.save(hinhAnh);
+        ctsp.setHinhAnh(hinhAnh);
 
         if (dto.getIdKhuyenMai() != null) {
             KhuyenMai khuyenMai = khuyenMaiService.findById(dto.getIdKhuyenMai());
