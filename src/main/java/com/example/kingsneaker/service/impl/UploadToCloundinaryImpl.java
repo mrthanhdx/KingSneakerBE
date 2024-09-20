@@ -23,4 +23,5 @@ public class UploadToCloundinaryImpl implements UploadToCloudinary {
         return cloudinary.uploader().upload(multipartFile.getBytes(),uploadParams)
                 .get("url").toString();
     }
+
 }

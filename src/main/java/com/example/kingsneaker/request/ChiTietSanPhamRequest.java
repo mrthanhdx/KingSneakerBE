@@ -28,6 +28,9 @@ public class ChiTietSanPhamRequest {
     private String trangThai;
 
 
+    @NotNull(message = "hinhAnh must not be null")
+    private MultipartFile hinhAnh;
+
     @NotNull(message = "sanPham must not be null")
     private Long idSanPham;
 
@@ -50,7 +53,5 @@ public class ChiTietSanPhamRequest {
 
     @NotNull(message = "ThuongHieu must not be null")
     private Long idThuongHieu;
-
-
 
 }
