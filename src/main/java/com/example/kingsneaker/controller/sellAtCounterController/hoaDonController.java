@@ -1,6 +1,8 @@
 package com.example.kingsneaker.controller.sellAtCounterController;
 
+import com.example.kingsneaker.entity.CreatedUpdatedAt;
 import com.example.kingsneaker.entity.HoaDon;
+import com.example.kingsneaker.entity.User;
 import com.example.kingsneaker.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,9 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -27,6 +32,20 @@ public class hoaDonController {
         return new ResponseEntity<>(listHD, HttpStatus.OK);
     }
 
+    @PostMapping("/new-hoa-don")
+    public ResponseEntity<?> newHoaDon(){
+        HoaDon hoaDon = new HoaDon();
+        hoaDon.setMa("HD-"+(int)(Math.random()*99999));
+        hoaDon.setNgayTao(LocalDateTime.now());
+        hoaDon.setLoaiDon(1);
+        hoaDon.setTrangThai(0);
+        hoaDon.setTongTien(Double.valueOf(0));
+        User user = new User();
+        user.setId(Long.valueOf(1));
+        hoaDon.setNhanVien(user);
+        hoaDonService.save(hoaDon);
+        return ResponseEntity.ok("Create invoice success !");
+    }
     @DeleteMapping("/delele-hoa-don/{idHD}")
     public ResponseEntity<?> deleteHoaDon(@PathVariable("idHD") Long idHD){
         try {

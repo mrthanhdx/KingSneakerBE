@@ -52,7 +52,7 @@ public class HoaDon {
     private String ghiChu;
 
     @Column(name = "tong_tien")
-    private Float tongTien;
+    private Double tongTien;
 
     @Column(name = "loai_don")
     private Integer loaiDon;
