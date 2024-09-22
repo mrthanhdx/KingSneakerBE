@@ -36,11 +36,14 @@ public class HoaDon {
     @JoinColumn(name = "id_users")
     private User khachHang;
 
+    @ManyToOne
+    @JoinColumn(name = "id_user_create")
+    private User nhanVien;
     @Column(name = "ma")
     private String ma;
 
     @Column(name = "ngay_tao")
-    private Date ngayTao;
+    private LocalDateTime ngayTao;
 
     @Column(name = "ngay_thanh_toan")
     private LocalDateTime ngayThanhToan;

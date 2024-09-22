@@ -17,4 +17,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/audio/**")
                 .addResourceLocations("file:src/main/resources/static/audio/");
     }
+
+
 }

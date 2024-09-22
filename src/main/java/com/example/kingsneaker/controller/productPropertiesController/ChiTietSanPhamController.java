@@ -68,39 +68,19 @@ public class ChiTietSanPhamController {
     }
 
 
-//    @PutMapping(path = "/update-chi-tiet-san-pham/{idCTSP}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//    public ResponseEntity<?> updateCTSP(
-//            @RequestPart("image") MultipartFile image,
-//            @RequestPart("details") String details,
-//            @PathVariable("idCTSP") Long idCTSP) {
-//        try {
-//            ObjectMapper objectMapper = new ObjectMapper();
-//            ChiTietSanPhamRequest ctspRequest = objectMapper.readValue(details, ChiTietSanPhamRequest.class);
-//            System.out.println(idCTSP);
-//            System.out.println(details);
-//            System.out.println(image);
-//            System.out.println(ctspRequest);
-//            //validate
-//            if (ctspRequest.getGiaBan() == null || ctspRequest.getGiaBan() <= 0) {
-//                return new ResponseEntity<>("GiaBan must be greater than 0",HttpStatus.NOT_FOUND);
-//            }
-//            if (ctspRequest.getSoLuong() == null || ctspRequest.getSoLuong() <= 0) {
-//                System.out.println(ctspRequest.getSoLuong());
-//                return new ResponseEntity<>("soLuong must be greater than 0",HttpStatus.NOT_FOUND);
-//            }
-//            ChiTietSanPham ctsp = chiTietSanPhamMapper.mapToEntity(ctspRequest);
-//
-//            ctsp.setId(idCTSP);
-//            chiTietSanPhamService.save(ctsp);
-//
-//
-//            ChiTietSanPhamResponse response = chiTietSanPhamMapper.mapToResponse(ctsp);
-//            return ResponseEntity.ok(response);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            throw new IllegalArgumentException("Update Product Detail failed !");
-//        }
-//    }
+    @PutMapping( "/update-chi-tiet-san-pham/{idCTSP}")
+    public ResponseEntity<?> updateCTSP(
+            @ModelAttribute @Valid ChiTietSanPhamRequest chiTietSanPhamRequest,
+            @PathVariable("idCTSP") Long idCTSP) throws IOException {
+        System.out.println(chiTietSanPhamRequest.getGiaBan());
+        ChiTietSanPham chiTietSanPham = chiTietSanPhamMapper.mapToEntity(chiTietSanPhamRequest);
+        chiTietSanPham.setId(idCTSP);
+        chiTietSanPhamService.save(chiTietSanPham);
+        ChiTietSanPhamResponse chiTietSanPhamResponse = chiTietSanPhamMapper.mapToResponse(chiTietSanPham);
+        return new ResponseEntity<>(chiTietSanPhamResponse,HttpStatus.OK);
+
+
+    }
 
 //    @DeleteMapping("/delete-chi-tiet-san-pham/{idCTSP}")
 //    public ResponseEntity<ChiTietSanPham> deleteCTSP(@PathVariable("idCTSP") Long idCTSP) {
