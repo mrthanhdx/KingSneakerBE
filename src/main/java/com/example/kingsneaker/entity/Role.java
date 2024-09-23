@@ -1,15 +1,14 @@
 package com.example.kingsneaker.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,29 +19,22 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Builder
+@Table(name = "role")
 @Entity
-@Table(name = "dat_hang")
-public class DatHang {
+public class Role {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_users")
-    private User user;
+    @NotBlank(message = " không được phép trống")
+    @Column(name = "ma")
+    private String ma;
 
-    @ManyToOne
-    @JoinColumn(name = "id_khuyen_mai")
-    private KhuyenMai khuyenMai;
+    @NotBlank(message = " không được phép trống")
+    @Column(name = "role_name")
+    private String ten;
 
-    @Column(name = "ghi_chu")
-    private String ghiChu;
-
-    @Column(name = "phuong_thuc_thanh_toan")
-    private String phuongThucThanhToan;
-
-    @Column(name = "tong_tien")
-    private Float tongTien;
-
-    // Getters and Setters
 }

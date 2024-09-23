@@ -53,9 +53,7 @@ public class ChiTietSanPham extends CreatedUpdatedAt {
     private KieuDang kieuDang;
 
 
-    @ManyToOne
-    @JoinColumn(name = "id_khuyen_mai")
-    private KhuyenMai khuyenMai;
+
 
     @Column(name = "trang_thai")
     private String trangThai;

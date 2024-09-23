@@ -22,7 +22,7 @@ import java.sql.Date;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "khuyen_mai_hoa_don")
+@Table(name = "voucher")
 public class Voucher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +43,11 @@ public class Voucher {
     private Integer hinhThuc;
     @NotNull
     @Column(name = "gia_tri_giam")
-    private Float giaTriGiam;
+    private Double giaTriGiam;
+
+    private Double giaTriToiThieu;
+
+    private Double giaTriGiamToiDa;
     @NotBlank
     @Column(name = "trang_thai")
     private String trangThai;

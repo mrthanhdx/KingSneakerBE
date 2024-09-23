@@ -41,13 +41,13 @@ public class hoaDonController {
     @PostMapping("/new-hoa-don")
     public ResponseEntity<?> newHoaDon(){
         HoaDon hoaDon = new HoaDon();
-        hoaDon.setMa("HD-"+(int)(Math.random()*99999));
+        hoaDon.setMa("HD-"+(int)(Math.random()*999999));
         hoaDon.setNgayTao(LocalDateTime.now());
         hoaDon.setLoaiDon(1);
         hoaDon.setTrangThai(0);
         hoaDon.setTongTien(Double.valueOf(0));
         User user = new User();
-        user.setId(Long.valueOf(1));
+        user.setId(Long.valueOf(2));
         hoaDon.setNhanVien(user);
         hoaDonService.save(hoaDon);
         return ResponseEntity.ok("Create invoice success !");

@@ -33,11 +33,11 @@ public class HoaDon {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id_users")
+    @JoinColumn(name = "id_khach_hang")
     private User khachHang;
 
     @ManyToOne
-    @JoinColumn(name = "id_user_create")
+    @JoinColumn(name = "id_nhan_vien")
     private User nhanVien;
     @Column(name = "ma")
     private String ma;
@@ -54,6 +54,16 @@ public class HoaDon {
     @Column(name = "tong_tien")
     private Double tongTien;
 
+    @Column(name = "tien_khach_tra")
+    private Double tienKhachTra;
+
+    @Column(name = "tien_thua")
+    private Double tienThua;
+
+
+    @Column(name = "doanh_thu")
+    private Double doanhThu;
+
     @Column(name = "loai_don")
     private Integer loaiDon;
 
@@ -61,11 +71,11 @@ public class HoaDon {
     private Integer trangThai;
 
     @ManyToOne
-    @JoinColumn(name = "id_khuyen_mai")
-    private Voucher khuyenMai;
+    @JoinColumn(name = "id_voucher")
+    private Voucher voucher;
 
     @PreUpdate
-    protected  void onUpdate(){
+    protected void onUpdate() {
         ngayThanhToan = LocalDateTime.now();
     }
     // Getters and setters (omitted for brevity)
