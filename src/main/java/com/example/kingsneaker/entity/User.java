@@ -77,7 +77,7 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "id_chuc_vu")
-    private ChucVu cv;
+    private Role cv;
 
     @OneToOne
     @JoinColumn(name = "id_dia_chi")

@@ -5,7 +5,6 @@ import com.example.kingsneaker.request.ChiTietSanPhamRequest;
 import com.example.kingsneaker.response.ChiTietSanPhamResponse;
 import com.example.kingsneaker.entity.ChatLieu;
 import com.example.kingsneaker.entity.ChiTietSanPham;
-import com.example.kingsneaker.entity.KhuyenMai;
 import com.example.kingsneaker.entity.KichCo;
 import com.example.kingsneaker.entity.KieuDang;
 import com.example.kingsneaker.entity.MauSac;
@@ -14,7 +13,6 @@ import com.example.kingsneaker.entity.SanPham;
 import com.example.kingsneaker.entity.ThuongHieu;
 import com.example.kingsneaker.service.ChatLieuService;
 import com.example.kingsneaker.service.HinhAnhService;
-import com.example.kingsneaker.service.KhuyenMaiService;
 import com.example.kingsneaker.service.KichCoService;
 import com.example.kingsneaker.service.KieuDangService;
 import com.example.kingsneaker.service.MauSacService;
@@ -25,7 +23,6 @@ import com.example.kingsneaker.service.ThuongHieuService;
 import com.example.kingsneaker.service.UploadToCloudinary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -44,8 +41,6 @@ public class ChiTietSanPhamMapper {
     KichCoService kichCoService;
     @Autowired
     KieuDangService kieuDangService;
-    @Autowired
-    KhuyenMaiService khuyenMaiService;
 
     @Autowired
     ThuongHieuService thuongHieuService;
@@ -82,7 +77,6 @@ public class ChiTietSanPhamMapper {
         chiTietSanPhamDto.setMauSac(chiTietSanPham.getMauSac() != null ? chiTietSanPham.getMauSac().getTen() : null);
         chiTietSanPhamDto.setIdMauSac(chiTietSanPham.getMauSac() != null ? chiTietSanPham.getMauSac().getId() : null);
 
-        chiTietSanPhamDto.setIdKhuyenMai(chiTietSanPham.getKhuyenMai() != null ? chiTietSanPham.getKhuyenMai().getId() : null);
         chiTietSanPhamDto.setThuongHieu(chiTietSanPham.getThuongHieu() != null ? chiTietSanPham.getThuongHieu().getTen() : null);
         chiTietSanPhamDto.setIdThuongHieu(chiTietSanPham.getThuongHieu() != null ? chiTietSanPham.getThuongHieu().getId() : null);
 
@@ -126,10 +120,7 @@ public class ChiTietSanPhamMapper {
         hinhAnhService.save(hinhAnh);
         ctsp.setHinhAnh(hinhAnh);
 
-        if (dto.getIdKhuyenMai() != null) {
-            KhuyenMai khuyenMai = khuyenMaiService.findById(dto.getIdKhuyenMai());
-            ctsp.setKhuyenMai(khuyenMai);
-        }
+
 
         ThuongHieu thuongHieu = thuongHieuService.findById(dto.getIdThuongHieu());
         ctsp.setThuongHieu(thuongHieu);

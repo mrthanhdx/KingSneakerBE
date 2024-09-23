@@ -1,7 +1,6 @@
 package com.example.kingsneaker.controller.productPropertiesController;
 
 import com.example.kingsneaker.entity.KieuDang;
-import com.example.kingsneaker.service.KhuyenMaiService;
 import com.example.kingsneaker.service.KieuDangService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
