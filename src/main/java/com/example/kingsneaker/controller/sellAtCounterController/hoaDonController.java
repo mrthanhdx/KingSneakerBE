@@ -32,6 +32,12 @@ public class hoaDonController {
         return new ResponseEntity<>(listHD, HttpStatus.OK);
     }
 
+
+    @GetMapping("/detail/{idHD}")
+    public ResponseEntity<HoaDon> getDetailHoaDon( @PathVariable("idHD") Long idHD) {
+        HoaDon hoaDon = hoaDonService.findById(idHD);
+        return new ResponseEntity<>(hoaDon,HttpStatus.OK);
+    }
     @PostMapping("/new-hoa-don")
     public ResponseEntity<?> newHoaDon(){
         HoaDon hoaDon = new HoaDon();
