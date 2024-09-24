@@ -45,4 +45,9 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
             throw new IllegalArgumentException("IdSanPham is required.");
         }
     }
+
+    @Override
+    public void updateSoluongCTSP(Long idCTSP, Integer soLuong) {
+        chiTietSanPhamRepository.UpdateSoLuongSpctById(idCTSP,soLuong);
+    }
 }
