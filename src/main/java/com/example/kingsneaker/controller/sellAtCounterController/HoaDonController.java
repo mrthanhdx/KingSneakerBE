@@ -1,6 +1,5 @@
 package com.example.kingsneaker.controller.sellAtCounterController;
 
-import com.example.kingsneaker.entity.CreatedUpdatedAt;
 import com.example.kingsneaker.entity.HoaDon;
 import com.example.kingsneaker.entity.User;
 import com.example.kingsneaker.service.HoaDonService;
@@ -15,13 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/hoa-don")
 
-public class hoaDonController {
+public class HoaDonController {
 
     @Autowired
     HoaDonService hoaDonService;

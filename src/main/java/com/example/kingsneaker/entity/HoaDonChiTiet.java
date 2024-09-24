@@ -35,7 +35,7 @@ public class HoaDonChiTiet extends CreatedUpdatedAt {
     private HoaDon hoaDon;
 
     @Column(name = "don_gia")
-    private Float donGia;
+    private Double donGia;
 
     @Column(name = "so_luong")
     private Integer soLuong;
