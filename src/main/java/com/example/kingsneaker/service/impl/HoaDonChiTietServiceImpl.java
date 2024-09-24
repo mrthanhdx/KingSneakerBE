@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
+ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     @Autowired
     HoaDonChiTietRepository hoaDonChiTietRepository;
     @Override
@@ -37,5 +37,27 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     @Override
     public List<HoaDonChiTiet> getListHDCTById(Long idHD) {
         return hoaDonChiTietRepository.getHoaDonChiTietsByIdHd(idHD);
+    }
+
+    @Override
+    public void deleteHDCTByIdHdAndIdSpct(Long idHD, Long idCTSP) {
+        hoaDonChiTietRepository.deleteHDCTByIdHdAndIdSpct(idHD,idCTSP);
+    }
+
+    @Override
+    public Boolean isHdctExist(Long idCTSP, Long idHD) {
+        List<HoaDonChiTiet> listAllHDCT = hoaDonChiTietRepository.findAll();
+        for (HoaDonChiTiet hdct: listAllHDCT
+             ) {
+            if (hdct.getChiTietSanPham().getId()==idCTSP&&hdct.getHoaDon().getId()==idHD){
+                return true ;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public HoaDonChiTiet getHoaDonChiTietsByIdHdAndIdCtsp(Long idHD, Long idCTSP) {
+        return hoaDonChiTietRepository.getHoaDonChiTietsByIdHdAndIdCtsp(idHD,idCTSP);
     }
 }
