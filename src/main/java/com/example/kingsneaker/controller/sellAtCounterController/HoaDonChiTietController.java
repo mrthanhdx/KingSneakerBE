@@ -150,7 +150,7 @@ public class HoaDonChiTietController {
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.findById(idHDCT);
         Integer soLuongHienCo = hoaDonChiTiet.getChiTietSanPham().getSoLuong();
         HoaDon hoaDon = hoaDonChiTiet.getHoaDon();
-        if (soLuongUpdate>soLuongHienCo){
+        if (soLuongUpdate>soLuongHienCo+hoaDonChiTiet.getSoLuong()){
             return new ResponseEntity<>("so Luong update khong hop le, Chi con " + soLuongHienCo + " san pham nay", HttpStatus.BAD_REQUEST);
         } else if (soLuongUpdate < 0) {
             return new ResponseEntity<>("so Luong update khong hop le, so luong phai lon hon 0", HttpStatus.BAD_REQUEST);
