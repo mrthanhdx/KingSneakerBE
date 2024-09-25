@@ -3,9 +3,11 @@ package com.example.kingsneaker.controller.sellAtCounterController;
 import com.example.kingsneaker.entity.ChiTietSanPham;
 import com.example.kingsneaker.entity.HoaDon;
 import com.example.kingsneaker.entity.HoaDonChiTiet;
+import com.example.kingsneaker.entity.User;
 import com.example.kingsneaker.service.ChiTietSanPhamService;
 import com.example.kingsneaker.service.HoaDonChiTietService;
 import com.example.kingsneaker.service.HoaDonService;
+import com.example.kingsneaker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,11 +36,18 @@ public class HoaDonChiTietController {
     @Autowired
     ChiTietSanPhamService chiTietSanPhamService;
 
+    @Autowired
+    UserService userService;
 
     @GetMapping("/get-list-hdct/{idHD}")
     public ResponseEntity<?> getListHDCTByIdHD(@PathVariable("idHD") Long idHD) {
         List<HoaDonChiTiet> listHDCT = hoaDonChiTietService.getListHDCTById(idHD);
         return new ResponseEntity<>(listHDCT, HttpStatus.OK);
+    }
+
+    @GetMapping("/get-all-customer")
+    public ResponseEntity<List<User>> getAllCustomer() {
+        return new ResponseEntity<>(userService.getAllCustomer(),HttpStatus.OK);
     }
 
     @DeleteMapping("/delete-hdct")
@@ -72,13 +81,13 @@ public class HoaDonChiTietController {
         HoaDon hoaDon = hoaDonService.findById(idHD);
         List<HoaDonChiTiet> listHDCT = hoaDonChiTietService.getListHDCTById(idHD);
         List<Long> listIdHDCT = new ArrayList<>();
-        for (HoaDonChiTiet hdct: listHDCT) {
+        for (HoaDonChiTiet hdct : listHDCT) {
             ChiTietSanPham chiTietSanPham = hdct.getChiTietSanPham();
-            chiTietSanPham.setSoLuong(chiTietSanPham.getSoLuong()+hdct.getSoLuong());
+            chiTietSanPham.setSoLuong(chiTietSanPham.getSoLuong() + hdct.getSoLuong());
             chiTietSanPhamService.save(chiTietSanPham);
             listIdHDCT.add(hdct.getId());
         }
-        for (Long id: listIdHDCT) {
+        for (Long id : listIdHDCT) {
             hoaDonChiTietService.deleteById(id);
         }
 
@@ -150,15 +159,15 @@ public class HoaDonChiTietController {
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.findById(idHDCT);
         Integer soLuongHienCo = hoaDonChiTiet.getChiTietSanPham().getSoLuong();
         HoaDon hoaDon = hoaDonChiTiet.getHoaDon();
-        if (soLuongUpdate>soLuongHienCo+hoaDonChiTiet.getSoLuong()){
+        if (soLuongUpdate > soLuongHienCo + hoaDonChiTiet.getSoLuong()) {
             return new ResponseEntity<>("so Luong update khong hop le, Chi con " + soLuongHienCo + " san pham nay", HttpStatus.BAD_REQUEST);
         } else if (soLuongUpdate < 0) {
             return new ResponseEntity<>("so Luong update khong hop le, so luong phai lon hon 0", HttpStatus.BAD_REQUEST);
         }
-        Integer soLuongChechLech =soLuongUpdate- hoaDonChiTiet.getSoLuong();
+        Integer soLuongChechLech = soLuongUpdate - hoaDonChiTiet.getSoLuong();
         hoaDonChiTiet.setSoLuong(soLuongUpdate);
         ChiTietSanPham ctsp = chiTietSanPhamService.findById(hoaDonChiTiet.getChiTietSanPham().getId());
-        ctsp.setSoLuong(ctsp.getSoLuong()-soLuongChechLech);
+        ctsp.setSoLuong(ctsp.getSoLuong() - soLuongChechLech);
         chiTietSanPhamService.save(ctsp);
         Double tongTien = Double.valueOf(0);
         List<HoaDonChiTiet> listHDCT = hoaDonChiTietService.getListHDCTById(hoaDon.getId());

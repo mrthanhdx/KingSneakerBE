@@ -46,12 +46,12 @@ public class User {
     private LocalDate ngaySinh;
 
     @Column(name = "gioi_tinh")
-    private Boolean gioiTinh;
+    private Integer gioiTinh;
 
     @NotBlank(message = "SDT không được phép trống")
     @Pattern(regexp = "\\d+", message = "Phải là số")
     @Column(name = "so_dien_thoai")
-    private String soDienthoai;
+    private String soDienThoai;
 
     @NotBlank(message = "Email không được phép trống")
     @Column(name = "email")
@@ -81,5 +81,5 @@ public class User {
 
     @OneToOne
     @JoinColumn(name = "id_dia_chi")
-    private DiaChi dc;
+    private DiaChi diaChi;
 }
