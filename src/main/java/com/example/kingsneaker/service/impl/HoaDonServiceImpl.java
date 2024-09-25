@@ -31,4 +31,14 @@ public class HoaDonServiceImpl implements HoaDonService {
     public List<HoaDon> findAll() {
         return hoaDonRepository.findAll();
     }
+
+    @Override
+    public void addIdCustomerToInvoice(Long idCustomer, Long idInvoice) {
+        hoaDonRepository.addIdCustomerToInvoice(idCustomer,idInvoice);
+    }
+
+    @Override
+    public void addIdVoucherToInvoice(Long idVoucher, Long idInvoice) {
+        hoaDonRepository.addIdVoucherToInvoice(idVoucher,idInvoice);
+    }
 }

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -64,4 +64,13 @@ public class Voucher {
     @Column(name = "so_luong")
     private Integer soLuong;
 
+    public boolean isVoucherStarted() {
+        Date currentDate = new Date();
+        return currentDate.after(ngayBatDau) || currentDate.equals(ngayBatDau);
+    }
+
+    public boolean isVoucherExpired() {
+        Date currentDate = new Date();
+        return currentDate.after(ngayKetThuc);
+    }
 }
