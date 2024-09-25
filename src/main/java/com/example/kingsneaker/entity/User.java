@@ -76,8 +76,8 @@ public class User {
     private LocalDate ngaySua;
 
     @ManyToOne
-    @JoinColumn(name = "id_chuc_vu")
-    private Role cv;
+    @JoinColumn(name = "id_role")
+    private Role role;
 
     @OneToOne
     @JoinColumn(name = "id_dia_chi")
