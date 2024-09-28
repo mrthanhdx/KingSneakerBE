@@ -31,4 +31,10 @@ public class VoucherServiceImpl implements VoucherService {
     public List<Voucher> findAll() {
         return voucherRepository.findAll();
     }
+
+
+    @Override
+    public void updateVoucherQuantity(Long idVoucher, Integer voucherQuantity) {
+        voucherRepository.updateVoucherQuantity(idVoucher,voucherQuantity);
+    }
 }

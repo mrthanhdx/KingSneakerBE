@@ -47,7 +47,7 @@ public class HoaDonChiTietController {
 
     @GetMapping("/get-all-customer")
     public ResponseEntity<List<User>> getAllCustomer() {
-        return new ResponseEntity<>(userService.getAllCustomer(),HttpStatus.OK);
+        return new ResponseEntity<>(userService.getAllCustomer(), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete-hdct")
@@ -68,6 +68,12 @@ public class HoaDonChiTietController {
             }
             hoaDon.setTongTien(tongTien);
             hoaDon.setId(idHD);
+            if (hoaDon.getVoucher() != null) {
+                Double giaTriToiThieu = hoaDon.getVoucher().getGiaTriToiThieu();
+                if (hoaDon.getTongTien() < giaTriToiThieu) {
+                    hoaDon.setVoucher(null);
+                }
+            }
             hoaDonService.save(hoaDon);
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,6 +104,7 @@ public class HoaDonChiTietController {
             tongTien += hdct1.getDonGia() * hdct1.getSoLuong();
         }
         hoaDon.setTongTien(tongTien);
+        hoaDon.setVoucher(null);
         hoaDonService.save(hoaDon);
         return new ResponseEntity<>("xoa thanh cong", HttpStatus.OK);
     }
@@ -155,10 +162,13 @@ public class HoaDonChiTietController {
 
     @PutMapping("/update-quantity")
     public ResponseEntity<?> updateProductQuantityInHDCT(@RequestParam("idHDCT") Long idHDCT,
-                                                         @RequestParam("soLuongUpdate") Integer soLuongUpdate) {
+                                                         @RequestParam("soLuongUpdate") Integer soLuongUpdate,
+                                                         @RequestParam("idHD") Long idHD) {
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.findById(idHDCT);
         Integer soLuongHienCo = hoaDonChiTiet.getChiTietSanPham().getSoLuong();
-        HoaDon hoaDon = hoaDonChiTiet.getHoaDon();
+//        HoaDon hoaDon = hoaDonChiTiet.getHoaDon();
+        HoaDon hoaDon = hoaDonService.findById(idHD);;
+
         if (soLuongUpdate > soLuongHienCo + hoaDonChiTiet.getSoLuong()) {
             return new ResponseEntity<>("so Luong update khong hop le, Chi con " + soLuongHienCo + " san pham nay", HttpStatus.BAD_REQUEST);
         } else if (soLuongUpdate < 0) {
@@ -171,11 +181,20 @@ public class HoaDonChiTietController {
         chiTietSanPhamService.save(ctsp);
         Double tongTien = Double.valueOf(0);
         List<HoaDonChiTiet> listHDCT = hoaDonChiTietService.getListHDCTById(hoaDon.getId());
-        for (HoaDonChiTiet hdct1 : listHDCT
-        ) {
+        for (HoaDonChiTiet hdct1 : listHDCT) {
             tongTien += hdct1.getDonGia() * hdct1.getSoLuong();
         }
         hoaDon.setTongTien(tongTien);
+        hoaDon.setId(idHD);
+        if (hoaDon.getVoucher() != null) {
+            Double giaTriToiThieu = hoaDon.getVoucher().getGiaTriToiThieu();
+            System.out.println("GTTT: "+giaTriToiThieu);
+            System.out.println("Tong tien: "+ hoaDon.getTongTien());
+            if (hoaDon.getTongTien() < giaTriToiThieu) {
+                hoaDon.setVoucher(null);
+            }
+        }
+
         hoaDonService.save(hoaDon);
         return new ResponseEntity<>("Update So Luong sp Thanh Cong", HttpStatus.OK);
     }
