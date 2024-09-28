@@ -41,4 +41,19 @@ public class HoaDonServiceImpl implements HoaDonService {
     public void addIdVoucherToInvoice(Long idVoucher, Long idInvoice) {
         hoaDonRepository.addIdVoucherToInvoice(idVoucher,idInvoice);
     }
+
+    @Override
+    public void checkoutHD(Double tienKhachTra, Double tienThua, Double doanhThu, String ghiChu, Long idHD) {
+        hoaDonRepository.checkoutHD(tienKhachTra,tienThua,doanhThu,ghiChu,idHD);
+    }
+
+    @Override
+    public List<HoaDon> getListInvoiceCounter() {
+        return hoaDonRepository.getListInvoiceCounter();
+    }
+
+    @Override
+    public void cancelHoaDon(Long idHoaDon) {
+        hoaDonRepository.cancelHoaDon(idHoaDon);
+    }
 }

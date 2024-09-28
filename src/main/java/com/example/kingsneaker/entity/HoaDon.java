@@ -74,9 +74,9 @@ public class HoaDon {
     @JoinColumn(name = "id_voucher")
     private Voucher voucher;
 
-    @PreUpdate
-    protected void onUpdate() {
-        ngayThanhToan = LocalDateTime.now();
-    }
+//    @PreUpdate
+//    protected void onUpdate() {
+//        ngayThanhToan = LocalDateTime.now();
+//    }
     // Getters and setters (omitted for brevity)
 }
