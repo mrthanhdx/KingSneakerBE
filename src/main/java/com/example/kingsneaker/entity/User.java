@@ -13,6 +13,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +28,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @ToString
 @Builder
+@Data
 @Table(name = "users")
 @Entity
 public class User {
@@ -38,8 +40,9 @@ public class User {
 
     @Column( name = "ho_ten")
     @NotBlank(message = "Họ tên không được phép trống")
-    @Pattern(regexp = "^[a-zA-ZÀ-ỹ\\s]+$",message = "Họ tên chỉ được chứa các ký tự chữ và dấu cách")
+    @Pattern(regexp = "^(?=.{8,20}$)[A-Za-z ]+$", message = "Họ tên chỉ được chứa các ký tự chữ và dấu cách min 8 kí tự max 20")
     private String hoTen;
+
 
     @Column(name = "ngay_sinh")
     @DateTimeFormat(pattern = "MM-dd-yyyy")
@@ -79,7 +82,6 @@ public class User {
     @JoinColumn(name = "id_role")
     private Role role;
 
-    @OneToOne
-    @JoinColumn(name = "id_dia_chi")
-    private DiaChi diaChi;
+    @Column(name = "address")
+    private String address;
 }
