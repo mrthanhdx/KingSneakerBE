@@ -20,7 +20,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Builder
-@Table(name = "role")
+@Table(name = "roles")
 @Entity
 public class Role {
 
@@ -29,11 +29,9 @@ public class Role {
     @Column(name = "id")
     private Long id;
 
-    @NotBlank(message = " không được phép trống")
     @Column(name = "ma")
     private String ma;
 
-    @NotBlank(message = " không được phép trống")
     @Column(name = "role_name")
     private String ten;
 
