@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class CredentialsDto {
     private String username;
-    private char[] password;
+    private String password;
 }

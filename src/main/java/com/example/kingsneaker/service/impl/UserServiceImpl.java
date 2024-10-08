@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto login(CredentialsDto credentialsDto) {
         User user = userRepository.findByUserName(credentialsDto.getUsername())
-                .orElseThrow(() -> new AppException("Unknow User", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("Unknow User", HttpStatus.BAD_REQUEST));
         if (passwordEncoder.matches(CharBuffer.wrap(credentialsDto.getPassword()), user.getMatKhau())) {
             return userMapper.toDto(user);
         }
