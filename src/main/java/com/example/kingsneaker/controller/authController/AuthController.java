@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
@@ -28,7 +29,14 @@ public class AuthController {
     UserAuthProvider userAuthProvider;
 
     @PostMapping("/login")
-    public ResponseEntity<UserDto> login (@RequestBody CredentialsDto credentialsDto){
+    public ResponseEntity<UserDto> login (
+            @RequestParam("username") String username,
+            @RequestParam("password") String password
+//            @RequestBody CredentialsDto credentialsDto
+    ){
+        CredentialsDto credentialsDto = new CredentialsDto();
+        credentialsDto.setUsername(username);
+        credentialsDto.setPassword(password);
         UserDto user = userService.login(credentialsDto);
         user.setToken(userAuthProvider.createToken(user.getUsername()));
         return new ResponseEntity<>(user, HttpStatus.OK);
