@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/hoa-don-chi-tiet")
+@RequestMapping("/admin/api/v1/hoa-don-chi-tiet")
 public class HoaDonChiTietController {
     @Autowired
     HoaDonChiTietService hoaDonChiTietService;
