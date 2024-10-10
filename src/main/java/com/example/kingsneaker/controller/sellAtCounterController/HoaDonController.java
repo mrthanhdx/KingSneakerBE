@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/hoa-don")
+@RequestMapping("/admin/api/v1/hoa-don")
 
 public class HoaDonController {
 

@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/san-pham")
+@RequestMapping("/admin/api/v1/san-pham")
 @CrossOrigin(origins = "*",methods = { RequestMethod.PUT, RequestMethod.GET, RequestMethod.POST ,RequestMethod.DELETE})
 
 public class SanPhamController {
