@@ -28,6 +28,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers(HttpMethod.POST, "/api/v1/login", "/register").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/user/**").hasRole("CUSTOMER")
                         .anyRequest().permitAll())
                 // Handle unauthorized access
                 .exceptionHandling(exceptions -> exceptions.authenticationEntryPoint(userAuthenticationEntryPoint));
