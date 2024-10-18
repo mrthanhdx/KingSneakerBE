@@ -56,4 +56,8 @@ public class UserAuthProvider {
         System.out.println(user.toString());
         return new UsernamePasswordAuthenticationToken(user, null, authorities);
     }
+    public Date getTokenExpiry(String token) {
+        DecodedJWT decodedJWT = JWT.decode(token);
+        return decodedJWT.getExpiresAt(); // Extracts the expiration date
+    }
 }

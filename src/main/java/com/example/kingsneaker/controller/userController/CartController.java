@@ -33,6 +33,12 @@ public class CartController {
         return ResponseEntity.ok(cartItemService.getListCartItemByIdCustomer(idCustomer));
     }
 
+    @GetMapping("/get-cart-items/{idCart}")
+    public  ResponseEntity<?> getListCartItemByIdCart(@PathVariable("idCart") Long idCart){
+        List<CartItem> list = cartItemService.getListCartItemByIdCart(idCart);
+        return new ResponseEntity<>(list,HttpStatus.OK);
+    }
+
     @PostMapping("/new-cart-item")
     public ResponseEntity<?> createNewCartItem(@RequestParam("idCustomer") Long idCustomer,
                                                @RequestParam("idCtsp") Long idCtsp,
@@ -60,4 +66,5 @@ public class CartController {
         cartItemService.save(cartItem);
         return ResponseEntity.ok("Thêm sản phẩm thành công");
     }
+
 }

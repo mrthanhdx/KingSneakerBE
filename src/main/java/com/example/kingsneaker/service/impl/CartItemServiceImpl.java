@@ -44,4 +44,9 @@ public class CartItemServiceImpl implements CartItemService {
     public void updateSoLuongSpCartItem(Long idCustomer, Integer soLuong,Long idCtsp) {
         cartItemRepository.updateSoLuongSpCartItem(idCustomer,soLuong,idCtsp);
     }
+
+    @Override
+    public List<CartItem> getListCartItemByIdCart(Long idCart) {
+        return cartItemRepository.getListCartByIdCart(idCart);
+    }
 }

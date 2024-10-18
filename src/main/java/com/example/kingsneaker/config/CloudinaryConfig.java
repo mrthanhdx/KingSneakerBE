@@ -28,7 +28,7 @@ public class CloudinaryConfig {
         config.put("api_secret",API_SECRET);
 
         return new Cloudinary(config);
-        
+
 
     }
 
