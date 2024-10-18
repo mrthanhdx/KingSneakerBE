@@ -13,9 +13,11 @@ import java.util.List;
 public interface CartItemRepository extends JpaRepository<CartItem,Long> {
     @Query(value = "select * from cart_item where id_customer = ?1",nativeQuery = true)
     List<CartItem> getListCartItemByIdCustomer(Long idCustomer);
+    @Query(value = "select * from cart_item where id_cart = ?1",nativeQuery = true)
+    List<CartItem> getListCartByIdCart(Long idCart);
 
     @Modifying
     @Transactional
-    @Query(value = "update  cart_item set so_luong = ?2 where id_customer = ?1 and id_chi_tiet_san_pham=?3",nativeQuery = true)
+    @Query(value = "update  cart_item set so_luong = ?2 where id_customer = ?1 and id_chi_tiet_sp=?3",nativeQuery = true)
     void updateSoLuongSpCartItem(Long idCustomer,Integer soLuong,Long idCtsp);
 }

@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -18,4 +20,6 @@ public class UserDto {
     private String token;
 
     private String role;
+
+    private Date tokenExpiry;
 }

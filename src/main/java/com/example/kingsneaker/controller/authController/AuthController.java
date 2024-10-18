@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -31,16 +32,24 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<UserDto> login (
             @RequestParam("username") String username,
-            @RequestParam("password") String password
-//            @RequestBody CredentialsDto credentialsDto
-    ){
+            @RequestParam("password") String password) {
+
         CredentialsDto credentialsDto = new CredentialsDto();
         credentialsDto.setUsername(username);
         credentialsDto.setPassword(password);
+
         UserDto user = userService.login(credentialsDto);
-        user.setToken(userAuthProvider.createToken(user.getUsername()));
+
+        // Generate the token and set the expiration date
+        String token = userAuthProvider.createToken(user.getUsername());
+        Date tokenExpiry = userAuthProvider.getTokenExpiry(token); // Extract the expiry date
+
+        user.setToken(token);
+        user.setTokenExpiry(tokenExpiry); // Set the expiration date in UserDto
+
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
 
     @PostMapping("/register")
     public ResponseEntity<UserDto> register(@RequestBody SignUpDto signUpDto){

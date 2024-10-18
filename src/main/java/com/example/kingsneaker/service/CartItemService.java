@@ -9,4 +9,6 @@ public interface CartItemService extends CommonService<CartItem> {
 
      void updateSoLuongSpCartItem(Long idCustomer,Integer soLuong,Long idCtsp);
 
+     List<CartItem> getListCartItemByIdCart (Long idCart);
+
 }
