@@ -25,7 +25,7 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Override
     public CartItem findById(Long id) {
-        return null;
+        return cartItemRepository.findById(id).orElse(null);
     }
 
     @Override
