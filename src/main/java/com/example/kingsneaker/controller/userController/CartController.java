@@ -6,11 +6,14 @@ import com.example.kingsneaker.entity.User;
 import com.example.kingsneaker.service.CartItemService;
 import com.example.kingsneaker.service.ChiTietSanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,10 +37,11 @@ public class CartController {
     }
 
     @GetMapping("/get-cart-items/{idCart}")
-    public  ResponseEntity<?> getListCartItemByIdCart(@PathVariable("idCart") Long idCart){
+    public ResponseEntity<?> getListCartItemByIdCart(@PathVariable("idCart") Long idCart) {
         List<CartItem> list = cartItemService.getListCartItemByIdCart(idCart);
-        return new ResponseEntity<>(list,HttpStatus.OK);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
 
     @PostMapping("/new-cart-item")
     public ResponseEntity<?> createNewCartItem(@RequestParam("idCustomer") Long idCustomer,
@@ -65,6 +69,26 @@ public class CartController {
         }
         cartItemService.save(cartItem);
         return ResponseEntity.ok("Thêm sản phẩm thành công");
+    }
+
+    @PutMapping("/update-quantity")
+    public ResponseEntity<?> updateQuantityCartItem(@RequestParam("idCartItem") Long idCartItem,
+                                                    @RequestParam("quantityUpdate") Integer quantityUpdate) {
+        CartItem cartItem = cartItemService.findById(idCartItem);
+        ChiTietSanPham chiTietSanPham = chiTietSanPhamService.findById(cartItem.getChiTietSanPham().getId());
+        Integer currentQuantity = chiTietSanPham.getSoLuong();
+        if (currentQuantity < quantityUpdate) {
+            return new ResponseEntity<>("quantity is not enough, we just have " + currentQuantity + " product!", HttpStatus.BAD_REQUEST);
+        }
+        cartItemService.updateSoLuongSpCartItem(cartItem.getCustomer().getId(), quantityUpdate, cartItem.getChiTietSanPham().getId());
+        return new ResponseEntity<>("Update successfully", HttpStatus.OK);
+
+    }
+
+    @DeleteMapping("/delete-cart-item/{idCartItem}")
+    public ResponseEntity<?> deleteCartItem(@PathVariable("idCartItem") Long idCartItem) {
+        cartItemService.deleteById(idCartItem);
+        return new ResponseEntity<>("Delete successfully", HttpStatus.OK);
     }
 
 }
