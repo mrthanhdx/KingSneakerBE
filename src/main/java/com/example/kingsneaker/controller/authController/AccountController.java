@@ -53,6 +53,4 @@ public class AccountController {
         response.put("message", "Update Successfully");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-
 }
