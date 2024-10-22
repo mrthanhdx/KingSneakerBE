@@ -15,13 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/api/v1/voucher")
 public class VoucherController {
 
     @Autowired
     VoucherService voucherService;
 
-    @GetMapping("/get-voucher-valid/{tongTienHD}")
+    @GetMapping("/admin/api/v1/voucher/get-voucher-valid/{tongTienHD}")
     public ResponseEntity<List<Voucher>> getListVoucherValid(@PathVariable("tongTienHD") String tongTienHD1) {
 //        System.out.println(tongTienHD1);
         Double tongTienHD = Double.parseDouble(tongTienHD1);
@@ -37,5 +36,10 @@ public class VoucherController {
             }
         }
         return new ResponseEntity<>(listVoucherValid, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/api/v1/voucher/get-voucher-avaliable")
+    public ResponseEntity<?> getListVoucherAvaliable() {
+        return ResponseEntity.ok(voucherService.getListVoucherAvaliable());
     }
 }

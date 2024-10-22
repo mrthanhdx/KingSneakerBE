@@ -37,4 +37,9 @@ public class VoucherServiceImpl implements VoucherService {
     public void updateVoucherQuantity(Long idVoucher, Integer voucherQuantity) {
         voucherRepository.updateVoucherQuantity(idVoucher,voucherQuantity);
     }
+
+    @Override
+    public List<Voucher> getListVoucherAvaliable() {
+        return voucherRepository.getListVoucherAvailable();
+    }
 }

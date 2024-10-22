@@ -18,9 +18,24 @@ public class UserMapper {
     public UserDto toDto(User user) {
         UserDto dto = new UserDto();
         dto.setId(user.getId());
+        dto.setAddress(user.getAddress());
+        dto.setEmail(user.getEmail());
+        dto.setGender(user.getGioiTinh());
+        dto.setPhoneNumber(user.getSoDienThoai());
         dto.setFullName(user.getHoTen());
         dto.setUsername(user.getTaiKhoan());
         dto.setRole(user.getRole().getTen());
+        return dto;
+    }
+
+    public User toUser(UserDto user) {
+        User dto = new User();
+        dto.setId(user.getId());
+        dto.setAddress(user.getAddress());
+        dto.setEmail(user.getEmail());
+        dto.setGioiTinh(user.getGender());
+        dto.setSoDienThoai(user.getPhoneNumber());
+        dto.setHoTen(user.getFullName());
         return dto;
     }
 

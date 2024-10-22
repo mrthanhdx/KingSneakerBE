@@ -21,5 +21,12 @@ public class UserDto {
 
     private String role;
 
+    private String email;
+
+    private String phoneNumber;
+
+    private Integer gender;
+
+    private String address;
     private Date tokenExpiry;
 }
